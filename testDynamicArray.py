@@ -2,8 +2,10 @@ import unittest
 import math
 from hypothesis import given
 import hypothesis.strategies as st
-from DynamicArray import DynamicArray, cons, remove, length, isMember, reverse, to_list, from_list
-from DynamicArray import find, filter_the_value, map_the_value, reduce, iterator_element, next_element
+from DynamicArray import DynamicArray, cons, remove, length
+from DynamicArray import isMember, reverse, to_list, from_list
+from DynamicArray import find, filter_the_value, map_the_value
+from DynamicArray import reduce, iterator_element, next_element
 from DynamicArray import empty, concat
 
 
@@ -65,7 +67,7 @@ class TestDynamicArray(unittest.TestCase):
         self.assertEqual(to_list(remove(l1, b)), list1)
 
     @given(st.floats(), st.floats())
-    def test_remove_text(self, a, b):
+    def test_remove_floats(self, a, b):
         emp = DynamicArray()
         l1 = cons(a, cons(b, emp))
         list1 = []
@@ -217,8 +219,11 @@ class TestDynamicArray(unittest.TestCase):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         initial_state = 1
-        l2 = cons(a + 1 + initial_state, cons(b + 1 + initial_state, cons(c + 1 + initial_state, emp)))
-        self.assertEqual(reduce(l1, lambda x, state: x + 1 + state, initial_state), l2)
+        l2 = cons(a + 1 + initial_state,
+                  cons(b + 1 + initial_state,
+                       cons(c + 1 + initial_state, emp)))
+        self.assertEqual(reduce(l1, lambda x, state: x + 1 + state,
+                                initial_state), l2)
 
     def test_iterator_unittest(self):
         emp = DynamicArray()
@@ -243,7 +248,7 @@ class TestDynamicArray(unittest.TestCase):
         self.assertEqual(empty(l1), emp)
 
     @given(st.floats(), st.floats(), st.floats())
-    def test_empty_unittest(self, a, b, c):
+    def test_empty_floats(self, a, b, c):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         self.assertEqual(empty(l1), emp)
@@ -259,8 +264,8 @@ class TestDynamicArray(unittest.TestCase):
         l3 = from_list(list1)
         self.assertEqual(concat(l1, l2), l3)
 
-    @given(st.integers(), st.integers(), st.integers()
-        , st.integers(), st.integers(), st.integers())
+    @given(st.integers(), st.integers(), st.integers(),
+           st.integers(), st.integers(), st.integers())
     def test_concat_integers(self, a, b, c, d, e, f):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))

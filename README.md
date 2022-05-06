@@ -1,4 +1,4 @@
-# slay_the_dragon - lab #1 - variant 7
+# slay_the_dragon - lab #2 - variant 2
 
 This is an example project which demonstrates dynamic array structure and necessary
 
@@ -35,6 +35,8 @@ This is an example project which demonstrates dynamic array structure and necess
 
 ## Changelog
 
+- 06.05.2022 - 2
+  - add testDynamicArray.py
 - 05.05.2022 - 1
   - add DynamicArray.py
   - update README.md
