@@ -41,7 +41,6 @@ This is an example project which demonstrates dynamic array structure and necess
   - add DynamicArray.py
   - update README.md
 
-
 ## Design notes
 
 - Advantages of unit testing:

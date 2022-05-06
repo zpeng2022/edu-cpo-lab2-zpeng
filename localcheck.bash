@@ -1,3 +1,6 @@
+# pip install pycodestyle pyflakes pytest coverage
 pycodestyle .
 pyflakes .
-#coverage run -m pytest --verbose
+# sudo gem install mdl
+mdl README.md
+coverage run -m pytest --verbose
