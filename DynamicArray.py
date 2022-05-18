@@ -194,10 +194,13 @@ def next_element(a):
     if a.pos > len(a.array_node):
         print("stop iterator")
         return 0
+    dynamicArray = DynamicArray()
+    dynamicArray.capacity = a.capacity
+    dynamicArray.array_node.extend(a.array_node)
     siz = len(a.array_node) - 1
     tmp = a.array_node[siz - a.pos]
-    a.pos += 1
-    return tmp
+    dynamicArray.pos += a.pos + 1
+    return tmp, dynamicArray
 
 
 def empty(a):

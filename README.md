@@ -35,6 +35,9 @@ This is an example project which demonstrates dynamic array structure and necess
 
 ## Changelog
 
+- 18.05.2022 -3
+  - add PBT tests for different input
+  - updated the mutable functions
 - 06.05.2022 - 2
   - add testDynamicArray.py
 - 05.05.2022 - 1

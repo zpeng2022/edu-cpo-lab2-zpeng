@@ -29,6 +29,13 @@ class TestDynamicArray(unittest.TestCase):
         list1 = [a, b]
         self.assertEqual(to_list(l1), list1)
 
+    @given(st.binary(), st.integers())
+    def test_cons_binary_integers(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        list1 = [a, b]
+        self.assertEqual(to_list(l1), list1)
+
     @given(st.text(), st.text())
     def test_cons_text(self, a, b):
         emp = DynamicArray()
@@ -36,8 +43,22 @@ class TestDynamicArray(unittest.TestCase):
         list1 = [a, b]
         self.assertEqual(to_list(l1), list1)
 
+    @given(st.text(), st.floats())
+    def test_cons_text_floats(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        list1 = [a, b]
+        self.assertEqual(to_list(l1), list1)
+
     @given(st.none(), st.none())
     def test_cons_none(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        list1 = [a, b]
+        self.assertEqual(to_list(l1), list1)
+
+    @given(st.floats(), st.none())
+    def test_cons_floats_none(self, a, b):
         emp = DynamicArray()
         l1 = cons(a, cons(b, emp))
         list1 = [a, b]
@@ -77,6 +98,15 @@ class TestDynamicArray(unittest.TestCase):
             list1 = []
         self.assertEqual(to_list(remove(l1, b)), list1)
 
+    @given(st.floats(), st.none())
+    def test_remove_floats_none(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        list1 = []
+        if a != b:
+            list1 = [a]
+        self.assertEqual(to_list(remove(l1, b)), list1)
+
     def test_length_unittest(self):
         emp = DynamicArray()
         l1 = cons(None, cons(1, emp))
@@ -92,6 +122,13 @@ class TestDynamicArray(unittest.TestCase):
 
     @given(st.binary(), st.binary())
     def test_length_binary(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(b, cons(a, emp))
+        self.assertEqual(length(emp), 0)
+        self.assertEqual(length(l1), 2)
+
+    @given(st.floats(), st.binary())
+    def test_length_floats_binary(self, a, b):
         emp = DynamicArray()
         l1 = cons(b, cons(a, emp))
         self.assertEqual(length(emp), 0)
@@ -134,6 +171,13 @@ class TestDynamicArray(unittest.TestCase):
         l2 = cons(b, cons(a, emp))
         self.assertEqual(l1, reverse(l2))
 
+    @given(st.floats(), st.text())
+    def test_reverse_floats_text(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        l2 = cons(b, cons(a, emp))
+        self.assertEqual(l1, reverse(l2))
+
     def test_tolist_unittest(self):
         emp = DynamicArray()
         l1 = cons(None, cons(1, emp))
@@ -141,6 +185,13 @@ class TestDynamicArray(unittest.TestCase):
 
     @given(st.floats(), st.floats())
     def test_tolist_floats(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        lst = [a, b]
+        self.assertEqual(to_list(l1), lst)
+
+    @given(st.binary(), st.floats())
+    def test_tolist_binary_floats(self, a, b):
         emp = DynamicArray()
         l1 = cons(a, cons(b, emp))
         lst = [a, b]
@@ -157,6 +208,12 @@ class TestDynamicArray(unittest.TestCase):
         l1 = cons(a, cons(b, emp))
         self.assertEqual(l1, from_list([a, b]))
 
+    @given(st.binary(), st.floats())
+    def test_fromlist_binary_floats(self, a, b):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, emp))
+        self.assertEqual(l1, from_list([a, b]))
+
     def test_find_unittest(self):
         emp = DynamicArray()
         l1 = cons(8, cons(4, cons(2, emp)))
@@ -164,6 +221,19 @@ class TestDynamicArray(unittest.TestCase):
 
     @given(st.integers(), st.integers(), st.integers())
     def test_find_integers(self, a, b, c):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, cons(c, emp)))
+        lst = []
+        if a % 2 == 0:
+            lst.append(a)
+        if b % 2 == 0:
+            lst.append(b)
+        if c % 2 == 0:
+            lst.append(c)
+        self.assertEqual(find(l1, lambda x: x % 2 == 0), lst)
+
+    @given(st.integers(), st.floats(), st.floats())
+    def test_find_integers_floats(self, a, b, c):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         lst = []
@@ -194,6 +264,19 @@ class TestDynamicArray(unittest.TestCase):
             l2 = cons(a, l2)
         self.assertEqual(filter_the_value(l1, lambda x: x % 2 == 0), l2)
 
+    @given(st.integers(), st.floats(), st.floats())
+    def test_filter_the_value_integers_floats(self, a, b, c):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, cons(c, emp)))
+        l2 = DynamicArray()
+        if c % 2 == 0:
+            l2 = cons(c, l2)
+        if b % 2 == 0:
+            l2 = cons(b, l2)
+        if a % 2 == 0:
+            l2 = cons(a, l2)
+        self.assertEqual(filter_the_value(l1, lambda x: x % 2 == 0), l2)
+
     def test_map_unittest(self):
         emp = DynamicArray()
         l1 = cons(8, cons(3, cons(2, emp)))
@@ -202,6 +285,13 @@ class TestDynamicArray(unittest.TestCase):
 
     @given(st.integers(), st.integers(), st.integers())
     def test_map_integers(self, a, b, c):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, cons(c, emp)))
+        l2 = cons(a + 1, cons(b + 1, cons(c + 1, emp)))
+        self.assertEqual(map_the_value(l1, lambda x: x + 1), l2)
+
+    @given(st.integers(), st.floats(), st.floats())
+    def test_map_integers_floats(self, a, b, c):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         l2 = cons(a + 1, cons(b + 1, cons(c + 1, emp)))
@@ -229,18 +319,36 @@ class TestDynamicArray(unittest.TestCase):
         emp = DynamicArray()
         l1 = cons(8, cons(3, cons(2, emp)))
         l2 = iterator_element(l1)
-        self.assertEqual(next_element(l2), 8)
-        self.assertEqual(next_element(l2), 3)
-        self.assertEqual(next_element(l2), 2)
+        tem, l3 = next_element(l2)
+        self.assertEqual(tem, 8)
+        tem, l4 = next_element(l3)
+        self.assertEqual(tem, 3)
+        tem, l5 = next_element(l4)
+        self.assertEqual(tem, 2)
 
     @given(st.integers(), st.integers(), st.integers())
     def test_iterator_integers(self, a, b, c):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         l2 = iterator_element(l1)
-        self.assertEqual(next_element(l2), a)
-        self.assertEqual(next_element(l2), b)
-        self.assertEqual(next_element(l2), c)
+        tem, l3 = next_element(l2)
+        self.assertEqual(tem, a)
+        tem, l4 = next_element(l3)
+        self.assertEqual(tem, b)
+        tem, l5 = next_element(l4)
+        self.assertEqual(tem, c)
+
+    @given(st.integers(), st.binary(), st.integers())
+    def test_iterator_integers_binary(self, a, b, c):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, cons(c, emp)))
+        l2 = iterator_element(l1)
+        tem, l3 = next_element(l2)
+        self.assertEqual(tem, a)
+        tem, l4 = next_element(l3)
+        self.assertEqual(tem, b)
+        tem, l5 = next_element(l4)
+        self.assertEqual(tem, c)
 
     def test_empty_unittest(self):
         emp = DynamicArray()
@@ -267,6 +375,19 @@ class TestDynamicArray(unittest.TestCase):
     @given(st.integers(), st.integers(), st.integers(),
            st.integers(), st.integers(), st.integers())
     def test_concat_integers(self, a, b, c, d, e, f):
+        emp = DynamicArray()
+        l1 = cons(a, cons(b, cons(c, emp)))
+        l2 = cons(d, cons(e, cons(f, emp)))
+        list1 = []
+        list1.extend(to_list(l1))
+        list2 = to_list(l2)
+        list1.extend(list2)
+        l3 = from_list(list1)
+        self.assertEqual(concat(l1, l2), l3)
+
+    @given(st.integers(), st.integers(), st.integers(),
+           st.floats(), st.floats(), st.floats())
+    def test_concat_integers_floats(self, a, b, c, d, e, f):
         emp = DynamicArray()
         l1 = cons(a, cons(b, cons(c, emp)))
         l2 = cons(d, cons(e, cons(f, emp)))
